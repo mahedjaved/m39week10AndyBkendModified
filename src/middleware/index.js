@@ -22,8 +22,12 @@ exports.auth = async (req, res, next) => {
 	try {
 		// no need of this since it I have removed bearer from my InstaFrontEnd
 		// const token = req.header("Authorization").replace("Bearer ", "");
-		const token = req.header("Authorization");
-		// console.log(token);
+
+		// check if token is in the header or in the body
+		const token =
+			req.header("Authorization").length > 0
+				? req.header("Authorization")
+				: req.body.token;
 		const decoded = jwt.verify(token, process.env.SECRET);
 		const user = await User.findOne({
 			_id: decoded._id,

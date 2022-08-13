@@ -53,9 +53,10 @@ exports.updateUser = async (req, res) => {
 		// const updatedUser = await User.findOneAndUpdate(query, req.body, {
 		// 	new: true,
 		// });
-		if (req.body.username) {
+		if (req.body.userName) {
+			console.log(2);
 			const updatedUserRes = await User.updateOne(
-				{ username: req.body.username },
+				{ username: req.user.username },
 				{ $set: { username: req.body.new_username } }
 			);
 			console.log(`The username has been updated to`);
@@ -67,7 +68,7 @@ exports.updateUser = async (req, res) => {
 		}
 		if (req.body.password) {
 			const updatedUserRes = await User.updateOne(
-				{ password: req.body.password },
+				{ password: req.user.password },
 				{ $set: { password: req.body.new_password } }
 			);
 			console.log(`The password has been updated in the record`);

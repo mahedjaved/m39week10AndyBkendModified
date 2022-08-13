@@ -3,14 +3,19 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../models/Users");
 
 exports.hashPassword = async (req, res, next) => {
-	if ("password" in req.body) {
-		// I just had added my own salt number in process.env, I am not sure what's the point in putting in .env, just simple for me --> NOT INDUSTRY STD tho
-		req.body.password = await bcrypt.hash(
-			req.body.password,
-			process.env.SALT
-		);
+	try {
+		if ("password" in req.body) {
+			// I just had added my own salt number in process.env, I am not sure what's the point in putting in .env, just simple for me --> NOT INDUSTRY STD tho
+			req.body.password = await bcrypt.hash(
+				req.body.password,
+				process.env.SALT
+			);
+		}
+		res.send({ hashMsg: "Passed the hash successfully" });
+		next();
+	} catch (error) {
+		res.status(401).send({ message: "Hash failed" });
 	}
-	next();
 };
 
 exports.auth = async (req, res, next) => {
@@ -24,7 +29,6 @@ exports.auth = async (req, res, next) => {
 			_id: decoded._id,
 			"tokens.token": token,
 		});
-
 		if (!user) {
 			throw new Error();
 		}
@@ -32,6 +36,6 @@ exports.auth = async (req, res, next) => {
 		req.token = token;
 		next();
 	} catch (error) {
-		res.status(401).send({ message: "Please log in" });
+		res.status(401).send({ message: "Failed authorization" });
 	}
 };

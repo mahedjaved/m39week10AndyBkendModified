@@ -21,7 +21,8 @@ userRouter.post("/users/login", logIn);
 userRouter.get("/users/myprofile", auth, getMyProfile);
 userRouter.get("/users/logout", auth, logOut);
 
-userRouter.patch("/users/myprofile", auth, hashPassword, updateUser);
+userRouter.patch("/users/update", auth, hashPassword, updateUser);
+
 userRouter.delete("/users/myprofile", auth, deleteUser);
 
 module.exports = {

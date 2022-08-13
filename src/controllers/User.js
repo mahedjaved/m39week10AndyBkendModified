@@ -71,7 +71,7 @@ exports.updateUser = async (req, res) => {
 				(update = { email: req.body.new_email })
 			);
 		}
-		res.status(200).send({ res });
+		res.send({ updateMsg: "[info] Database successfully updated" });
 	} catch (error) {
 		res.status(404).send({ message: "Couldn't update!" });
 	}

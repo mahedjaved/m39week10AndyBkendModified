@@ -49,7 +49,7 @@ exports.logOut = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
 	try {
-		const query = { _id: `${req.user._id}` };
+		// const query = { _id: `${req.user._id}` };
 		// const updatedUser = await User.findOneAndUpdate(query, req.body, {
 		// 	new: true,
 		// });
@@ -89,7 +89,7 @@ exports.updateUser = async (req, res) => {
 				})
 			);
 		}
-		res.send({ updateMsg: "[info] Database successfully updated" });
+		res.status(200).send({ updatedUserRes });
 	} catch (error) {
 		res.status(404).send({ message: "Couldn't update!" });
 	}

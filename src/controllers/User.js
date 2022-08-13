@@ -50,10 +50,28 @@ exports.logOut = async (req, res) => {
 exports.updateUser = async (req, res) => {
 	try {
 		const query = { _id: `${req.user._id}` };
-		const updatedUser = await User.findOneAndUpdate(query, req.body, {
-			new: true,
-		});
-		res.status(200).send({ updatedUser });
+		// const updatedUser = await User.findOneAndUpdate(query, req.body, {
+		// 	new: true,
+		// });
+		if (req.body.new_username) {
+			const res = await User.updateOne(
+				(filter = query),
+				(update = { userName: req.body.new_username })
+			);
+		}
+		if (req.body.new_password) {
+			const res = await User.updateOne(
+				(filter = query),
+				(update = { password: req.body.new_password })
+			);
+		}
+		if (req.body.new_email) {
+			const res = await User.updateOne(
+				(filter = query),
+				(update = { email: req.body.new_email })
+			);
+		}
+		res.status(200).send({ res });
 	} catch (error) {
 		res.status(404).send({ message: "Couldn't update!" });
 	}

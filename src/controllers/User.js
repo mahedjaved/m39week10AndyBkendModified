@@ -53,22 +53,40 @@ exports.updateUser = async (req, res) => {
 		// const updatedUser = await User.findOneAndUpdate(query, req.body, {
 		// 	new: true,
 		// });
-		if (req.body.new_username) {
-			const res = await User.updateOne(
-				(filter = query),
-				(update = { userName: req.body.new_username })
+		if (req.body.username) {
+			const updatedUserRes = await User.updateOne(
+				{ username: req.body.username },
+				{ $set: { username: req.body.new_username } }
+			);
+			console.log(`The username has been updated to`);
+			console.log(
+				await User.findOne({
+					username: req.body.new_username,
+				})
 			);
 		}
-		if (req.body.new_password) {
-			const res = await User.updateOne(
-				(filter = query),
-				(update = { password: req.body.new_password })
+		if (req.body.password) {
+			const updatedUserRes = await User.updateOne(
+				{ password: req.body.password },
+				{ $set: { password: req.body.new_password } }
+			);
+			console.log(`The password has been updated in the record`);
+			console.log(
+				await User.findOne({
+					password: req.body.new_password,
+				})
 			);
 		}
-		if (req.body.new_email) {
-			const res = await User.updateOne(
-				(filter = query),
-				(update = { email: req.body.new_email })
+		if (req.body.email) {
+			const updatedUserRes = await User.updateOne(
+				{ email: req.body.email },
+				{ $set: { email: req.body.new_email } }
+			);
+			console.log(`The email has been updated in the record`);
+			console.log(
+				await User.findOne({
+					email: req.body.new_email,
+				})
 			);
 		}
 		res.send({ updateMsg: "[info] Database successfully updated" });

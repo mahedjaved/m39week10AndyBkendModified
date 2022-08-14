@@ -54,7 +54,7 @@ exports.updateUser = async (req, res) => {
 		// 	new: true,
 		// });
 		if (req.body.userName) {
-			console.log(2);
+			console.log(1);
 			const updatedUserRes = await User.updateOne(
 				{ username: req.user.username },
 				{ $set: { username: req.body.new_username } }

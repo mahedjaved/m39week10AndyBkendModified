@@ -90,7 +90,7 @@ exports.updateUser = async (req, res) => {
 				})
 			);
 		}
-		res.status(200).send({ updatedUserRes });
+		res.status(200).send({ msg: "Database update successful!" });
 	} catch (error) {
 		res.status(404).send({ message: "Couldn't update!" });
 	}

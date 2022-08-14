@@ -5,11 +5,8 @@ const { User } = require("../models/Users");
 exports.hashPassword = async (req, res, next) => {
 	try {
 		if ("password" in req.body) {
-			// I just had added my own salt number in process.env, --> NOT RECOMMENDED tho
-			req.body.password = await bcrypt.hash(
-				req.body.password,
-				process.env.SALT
-			);
+			// I just had added my own salt number in process.env, --> NOT RECOMMENDED tho, AND PROVEN TO NOT WORK
+			req.body.password = await bcrypt.hash(req.body.password, 8);
 		}
 		res.send({ hashMsg: "Passed the hash successfully" });
 		next();

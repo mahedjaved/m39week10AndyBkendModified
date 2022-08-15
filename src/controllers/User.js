@@ -4,6 +4,8 @@ exports.createUser = async (req, res) => {
 	try {
 		const user = new User(req.body);
 		const token = await user.generateAuthToken();
+		console.log(`Token from creating user`);
+		console.log(token);
 		const savedUser = await user.save();
 		res.status(201).send({ savedUser, token });
 	} catch (error) {
@@ -53,43 +55,31 @@ exports.updateUser = async (req, res) => {
 		// const updatedUser = await User.findOneAndUpdate(query, req.body, {
 		// 	new: true,
 		// });
-		if (req.body.userName) {
+		if (req.body.new_username) {
 			console.log(1);
 			const updatedUserRes = await User.updateOne(
 				{ username: req.user.username },
-				{ $set: { username: req.body.new_username } }
+				{ $set: { userName: req.body.new_username } }
 			);
-			console.log(`The username has been updated to`);
-			console.log(
-				await User.findOne({
-					username: req.body.new_username,
-				})
-			);
+			console.log(2);
 		}
-		if (req.body.password) {
+		if (req.body.new_password) {
+			console.log(3);
 			const updatedUserRes = await User.updateOne(
 				{ password: req.user.password },
 				{ $set: { password: req.body.new_password } }
 			);
-			console.log(`The password has been updated in the record`);
-			console.log(
-				await User.findOne({
-					password: req.body.new_password,
-				})
-			);
+			console.log(4);
 		}
-		if (req.body.email) {
+		if (req.body.new_email) {
+			console.log(5);
 			const updatedUserRes = await User.updateOne(
 				{ email: req.body.email },
 				{ $set: { email: req.body.new_email } }
 			);
-			console.log(`The email has been updated in the record`);
-			console.log(
-				await User.findOne({
-					email: req.body.new_email,
-				})
-			);
+			console.log(6);
 		}
+		console.log(7);
 		res.status(200).send({ msg: "Database update successful!" });
 	} catch (error) {
 		res.status(404).send({ message: "Couldn't update!" });

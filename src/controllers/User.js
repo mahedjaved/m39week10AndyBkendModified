@@ -54,24 +54,17 @@ exports.updateUser = async (req, res) => {
 		// const updatedUser = await User.findOneAndUpdate(query, req.body, {
 		// 	new: true,
 		// });
-		if (req.body.new_username) {
-			const updatedUserRes = await User.updateOne(
-				{ username: req.user.username },
-				{ $set: { userName: req.body.new_username } }
-			);
-		}
-		if (req.body.new_password) {
-			const updatedUserRes = await User.updateOne(
-				{ password: req.user.password },
-				{ $set: { password: req.body.new_password } }
-			);
-		}
-		if (req.body.new_email) {
-			const updatedUserRes = await User.updateOne(
-				{ email: req.body.email },
-				{ $set: { email: req.body.new_email } }
-			);
-		}
+
+		// former didnt work so working on this now @15/08/2022 - @13:00
+		const updates = await {
+			username: req.body.new_username,
+			password: req.body.new_password,
+		};
+		userUpdates = await User.updateOne(
+			{ username: req.body.username },
+			{ $set: updates }
+		);
+		console.log(updates);
 		res.status(200).send({ msg: "Update req accepted" });
 	} catch (error) {
 		res.status(404).send({ message: "Failed to update dataset!" });

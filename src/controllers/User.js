@@ -4,10 +4,9 @@ exports.createUser = async (req, res) => {
 	try {
 		const user = new User(req.body);
 		const token = await user.generateAuthToken();
-		console.log(`Token from creating user`);
-		console.log(token);
 		const savedUser = await user.save();
-		res.status(201).send({ savedUser, token });
+		// res.status(201).send({ savedUser, token });
+		res.send({ savedUser, token });
 	} catch (error) {
 		if (error.code == 11000) {
 			res.status(500).send({
@@ -56,33 +55,26 @@ exports.updateUser = async (req, res) => {
 		// 	new: true,
 		// });
 		if (req.body.new_username) {
-			console.log(1);
 			const updatedUserRes = await User.updateOne(
 				{ username: req.user.username },
 				{ $set: { userName: req.body.new_username } }
 			);
-			console.log(2);
 		}
 		if (req.body.new_password) {
-			console.log(3);
 			const updatedUserRes = await User.updateOne(
 				{ password: req.user.password },
 				{ $set: { password: req.body.new_password } }
 			);
-			console.log(4);
 		}
 		if (req.body.new_email) {
-			console.log(5);
 			const updatedUserRes = await User.updateOne(
 				{ email: req.body.email },
 				{ $set: { email: req.body.new_email } }
 			);
-			console.log(6);
 		}
-		console.log(7);
-		res.status(200).send({ msg: "Database update successful!" });
+		res.status(200).send({ msg: "Update req accepted" });
 	} catch (error) {
-		res.status(404).send({ message: "Couldn't update!" });
+		res.status(404).send({ message: "Failed to update dataset!" });
 	}
 };
 

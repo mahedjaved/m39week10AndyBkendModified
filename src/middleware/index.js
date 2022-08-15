@@ -8,7 +8,7 @@ exports.hashPassword = async (req, res, next) => {
 			// I just had added my own salt number in process.env, --> NOT RECOMMENDED tho, AND PROVEN TO NOT WORK
 			req.body.password = await bcrypt.hash(req.body.password, 8);
 		}
-		res.send({ hashMsg: "Passed the hash successfully" });
+		// res.send({ hashMsg: "Passed the hash successfully" });
 		next();
 	} catch (error) {
 		res.status(401).send({ message: "Hash failed" });
